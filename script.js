@@ -22,12 +22,14 @@
         const resultElement = rowElement.querySelector('.result');
         const checkElement = rowElement.querySelector('.check');
 
-        checkElement.addEventListener('click', () => {
+        const verify = () => {
+            // disable everything after verifying
             resultElement.setAttribute('disabled', true);
             checkElement.setAttribute('disabled', true);
 
             level += 1;
 
+            // handle correct and incorrect answers
             if (randomA * randomB === Number(resultElement.value)) {
                 rowElement.style.backgroundColor = '#d9ffd1';
                 score += 1;
@@ -35,6 +37,7 @@
                 rowElement.style.backgroundColor = '#ffb5b5';
             }
 
+            // handle different levels
             if (level <= 100) {
                 scoreElement.textContent = score;
                 levelElement.textContent = level;
@@ -43,9 +46,18 @@
             } else {
                 window.print();
             }
+        }
+
+        checkElement.addEventListener('click', verify);
+        resultElement.addEventListener('keyup', (event) => {
+            if (event.code === 'Enter') {
+                verify();
+            }
         });
 
         containerElement.prepend(rowElement);
+
+        resultElement.focus();
     };
 
     generate();
