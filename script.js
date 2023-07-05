@@ -23,6 +23,11 @@
         const checkElement = rowElement.querySelector('.check');
 
         const verify = () => {
+            if (resultElement.value === '') {
+                resultElement.focus();
+                return;
+            }
+
             // disable everything after verifying
             resultElement.setAttribute('disabled', true);
             checkElement.setAttribute('disabled', true);
