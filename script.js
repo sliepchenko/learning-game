@@ -11,26 +11,28 @@
         const randomA = Math.ceil(Math.random() * 10);
         const randomB = Math.ceil(Math.random() * 10);
 
-        const row = document.createElement('div');
-        row.innerHTML = `
+        const rowElement = document.createElement('div');
+        rowElement.innerHTML = `
         <div class="row">
             <h2 class="a">${randomA} * ${randomB} = </h2>
             <input type="number" class="result" placeholder="Type here a result">
             <button class="check">Check</button>
         </div>`;
 
-        const result = row.querySelector('.result');
-        const check = row.querySelector('.check');
+        const resultElement = rowElement.querySelector('.result');
+        const checkElement = rowElement.querySelector('.check');
 
-        check.addEventListener('click', () => {
-            result.setAttribute('disabled', true);
+        checkElement.addEventListener('click', () => {
+            resultElement.setAttribute('disabled', true);
+            checkElement.setAttribute('disabled', true);
+
             level += 1;
 
-            if (randomA * randomB === Number(result.value)) {
-                row.style.backgroundColor = '#d9ffd1';
+            if (randomA * randomB === Number(resultElement.value)) {
+                rowElement.style.backgroundColor = '#d9ffd1';
                 score += 1;
             } else {
-                row.style.backgroundColor = '#ffb5b5';
+                rowElement.style.backgroundColor = '#ffb5b5';
             }
 
             if (level <= 100) {
@@ -43,7 +45,7 @@
             }
         });
 
-        containerElement.prepend(row);
+        containerElement.prepend(rowElement);
     };
 
     generate();
