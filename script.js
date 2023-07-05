@@ -38,6 +38,8 @@
                 levelElement.textContent = level;
 
                 generate();
+            } else {
+                window.print();
             }
         });
 
