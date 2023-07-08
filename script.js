@@ -1,4 +1,6 @@
 (() => {
+    const MAX_LEVEL = 25;
+
     const containerElement = document.querySelector('.container');
 
     const levelElement = document.querySelector('.level');
@@ -8,13 +10,13 @@
     let score = 0;
 
     const generate = () => {
-        const randomA = Math.ceil(Math.random() * 10);
-        const randomB = Math.ceil(Math.random() * 10);
+        const randomA = Math.ceil(Math.random() * 1000);
+        const randomB = Math.ceil(Math.random() * 50);
 
         const rowElement = document.createElement('div');
         rowElement.innerHTML = `
         <div class="row">
-            <h2 class="a">${randomA} * ${randomB} = </h2>
+            <h2 class="a">${randomA} / ${randomB} = </h2>
             <input type="number" class="result" placeholder="Type here a result">
             <button class="check">Check</button>
         </div>`;
@@ -35,15 +37,15 @@
             level += 1;
 
             // handle correct and incorrect answers
-            if (randomA * randomB === Number(resultElement.value)) {
+            if (Math.floor(randomA / randomB) === Number(resultElement.value)) {
                 rowElement.style.backgroundColor = '#d9ffd1';
-                score += 1;
+                score += 4;
             } else {
                 rowElement.style.backgroundColor = '#ffb5b5';
             }
 
             // handle different levels
-            if (level <= 100) {
+            if (level <= MAX_LEVEL) {
                 scoreElement.textContent = score;
                 levelElement.textContent = level;
 
