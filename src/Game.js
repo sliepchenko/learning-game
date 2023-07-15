@@ -22,9 +22,9 @@ export class Game extends HTMLElement {
     #level = 1;
     #score = 0;
 
-    header = document.createElement('game-header');
-    main = document.createElement('game-main');
-    footer = document.createElement('game-footer');
+    header = new Header();
+    main = new Main();
+    footer = new Footer();
 
     constructor() {
         super();
@@ -76,7 +76,9 @@ export class Game extends HTMLElement {
     }
 
     #launchProtectingSystem() {
+        // prevent user from accidental reloading
         window.addEventListener('beforeunload', (event) => {
+            event.preventDefault();
             event.returnValue = 'Are you sure you want to leave?';
         });
     }

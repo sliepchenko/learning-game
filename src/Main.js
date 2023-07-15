@@ -10,7 +10,7 @@ export class Main extends HTMLElement {
     }
 
     addQuestion(maxA, maxB, operator) {
-        const question = document.createElement('game-question');
+        const question = new Question();
         question.setAttribute('a-min', 1);
         question.setAttribute('a-max', maxA);
         question.setAttribute('b-min', 1);
