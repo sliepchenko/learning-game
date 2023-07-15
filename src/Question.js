@@ -74,7 +74,7 @@ export class Question extends HTMLElement {
                 isAnswerCorrect = this.#a * this.#b === Number(inputElement.value);
                 break;
             case Question.DIVIDE:
-                isAnswerCorrect = this.#a / this.#b === Math.floor(Number(inputElement.value));
+                isAnswerCorrect = Math.floor(this.#a / this.#b) === Number(inputElement.value);
                 break;
             case Question.PLUS:
                 isAnswerCorrect = this.#a + this.#b === Number(inputElement.value);
