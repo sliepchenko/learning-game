@@ -37,7 +37,6 @@ export class Game extends HTMLElement {
 
         this.#generateQuestion();
         this.#launchAntiCheatSystem();
-        this.#launchProtectingSystem();
     }
 
     #generateQuestion = (() => {
@@ -72,14 +71,6 @@ export class Game extends HTMLElement {
 
         window.addEventListener('blur', () => {
             location.reload();
-        });
-    }
-
-    #launchProtectingSystem() {
-        // prevent user from accidental reloading
-        window.addEventListener('beforeunload', (event) => {
-            event.preventDefault();
-            event.returnValue = 'Are you sure you want to leave?';
         });
     }
 }
