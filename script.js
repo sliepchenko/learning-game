@@ -1,5 +1,5 @@
 (() => {
-    const MAX_LEVEL = 50;
+    const MAX_LEVEL = 100;
 
     const containerElement = document.querySelector('.container');
 
@@ -10,13 +10,13 @@
     let score = 0;
 
     const generate = () => {
-        const randomA = Math.ceil(Math.random() * 1000);
-        const randomB = Math.ceil(Math.random() * 9) + 1;
+        const randomA = Math.ceil(Math.random() * 10);
+        const randomB = Math.ceil(Math.random() * 10);
 
         const rowElement = document.createElement('div');
         rowElement.innerHTML = `
         <div class="row">
-            <h2 class="a">${randomA} / ${randomB} = </h2>
+            <h2 class="a">${randomA} * ${randomB} = </h2>
             <input type="number" class="result" placeholder="Type here a result">
             <button class="check">Check</button>
         </div>`;
@@ -37,9 +37,9 @@
             level += 1;
 
             // handle correct and incorrect answers
-            if (Math.floor(randomA / randomB) === Number(resultElement.value)) {
+            if (Math.floor(randomA * randomB) === Number(resultElement.value)) {
                 rowElement.style.backgroundColor = '#d9ffd1';
-                score += 2;
+                score += 1;
             } else {
                 rowElement.style.backgroundColor = '#ffb5b5';
             }
@@ -68,4 +68,10 @@
     };
 
     generate();
+
+    document.addEventListener("visibilitychange", function() {
+        if (document.hidden) {
+            location.reload();
+        }
+    });
 })();
