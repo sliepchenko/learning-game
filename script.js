@@ -1,77 +1,53 @@
-(() => {
-    const MAX_LEVEL = 100;
+import { Game } from './src/Game.js';
 
-    const containerElement = document.querySelector('.container');
+window.game = new Game();
+window.document.body.append(window.game);
 
-    const levelElement = document.querySelector('.level');
-    const scoreElement = document.querySelector('.score');
-
-    let level = 1;
-    let score = 0;
-
-    const generate = () => {
-        const randomA = Math.ceil(Math.random() * 10);
-        const randomB = Math.ceil(Math.random() * 10);
-
-        const rowElement = document.createElement('div');
-        rowElement.innerHTML = `
-        <div class="row">
-            <h2 class="a">${randomA} * ${randomB} = </h2>
-            <input type="number" class="result" placeholder="Type here a result">
-            <button class="check">Check</button>
-        </div>`;
-
-        const resultElement = rowElement.querySelector('.result');
-        const checkElement = rowElement.querySelector('.check');
-
-        const verify = () => {
-            if (resultElement.value === '') {
-                resultElement.focus();
-                return;
-            }
-
-            // disable everything after verifying
-            resultElement.setAttribute('disabled', true);
-            checkElement.setAttribute('disabled', true);
-
-            level += 1;
-
-            // handle correct and incorrect answers
-            if (Math.floor(randomA * randomB) === Number(resultElement.value)) {
-                rowElement.style.backgroundColor = '#d9ffd1';
-                score += 1;
-            } else {
-                rowElement.style.backgroundColor = '#ffb5b5';
-            }
-
-            // handle different levels
-            if (level <= MAX_LEVEL) {
-                scoreElement.textContent = score;
-                levelElement.textContent = level;
-
-                generate();
-            } else {
-                window.print();
-            }
-        }
-
-        checkElement.addEventListener('click', verify);
-        resultElement.addEventListener('keyup', (event) => {
-            if (event.code === 'Enter') {
-                verify();
-            }
-        });
-
-        containerElement.prepend(rowElement);
-
-        resultElement.focus();
-    };
-
-    generate();
-
-    document.addEventListener("visibilitychange", function() {
-        if (document.hidden) {
-            location.reload();
-        }
-    });
-})();
+// (() => {
+//     const containerElement = document.querySelector('.container');
+//
+//     const levelElement = document.querySelector('.level');
+//     const scoreElement = document.querySelector('.score');
+//
+//     let level = 1;
+//     let score = 0;
+//
+//     const generate = () => {
+//         const randomA = Math.ceil(Math.random() * 10);
+//         const randomB = Math.ceil(Math.random() * 10);
+//
+//         const row = document.createElement('div');
+//         row.innerHTML = `
+//         <div class="row">
+//             <h2 class="a">${randomA} * ${randomB} = </h2>
+//             <input type="number" class="result" placeholder="Type here a result">
+//             <button class="check">Check</button>
+//         </div>`;
+//
+//         const result = row.querySelector('.result');
+//         const check = row.querySelector('.check');
+//
+//         check.addEventListener('click', () => {
+//             result.setAttribute('disabled', true);
+//             level += 1;
+//
+//             if (randomA * randomB === Number(result.value)) {
+//                 row.style.backgroundColor = '#d9ffd1';
+//                 score += 1;
+//             } else {
+//                 row.style.backgroundColor = '#ffb5b5';
+//             }
+//
+//             if (level <= 100) {
+//                 scoreElement.textContent = score;
+//                 levelElement.textContent = level;
+//
+//                 generate();
+//             }
+//         });
+//
+//         containerElement.prepend(row);
+//     };
+//
+//     generate();
+// })();

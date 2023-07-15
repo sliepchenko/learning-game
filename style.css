@@ -1,11 +1,28 @@
-.row {
+.question {
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 10px;
     padding: 10px;
     line-height: 0;
+    font-size: 2rem;
 }
 
-.result {
-    font-size: 1.5em;
-    line-height: 1.5em;
+.question__input {
+    line-height: 1.5rem;
+    font-size: 2rem;
+}
+
+.question__check {
+    line-height: 1.5rem;
+    font-size: 2rem;
+    padding: 7px 20px;
+}
+
+.question_correct {
+    background-color: #d9ffd1;
+}
+
+.question_incorrect {
+    background-color: #ffb5b5;
 }
