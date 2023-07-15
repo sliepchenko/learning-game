@@ -1,6 +1,5 @@
 import { Header } from './Header.js';
 import { Main } from './Main.js';
-import { Footer } from './Footer.js';
 import { Question } from './Question.js';
 
 export class Game extends HTMLElement {
@@ -24,7 +23,6 @@ export class Game extends HTMLElement {
 
     header = new Header();
     main = new Main();
-    footer = new Footer();
 
     constructor() {
         super();
@@ -33,7 +31,8 @@ export class Game extends HTMLElement {
     connectedCallback() {
         this.append(this.header);
         this.append(this.main);
-        this.append(this.footer);
+
+        this.classList.add('container');
 
         this.#generateQuestion();
         this.#launchAntiCheatSystem();

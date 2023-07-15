@@ -6,7 +6,7 @@ export class Main extends HTMLElement {
     }
 
     connectedCallback() {
-
+        this.classList.add('main');
     }
 
     addQuestion(maxA, maxB, operator) {

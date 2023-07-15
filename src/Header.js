@@ -1,8 +1,10 @@
 export class Header extends HTMLElement {
     #template = `
-    <h1>Math Game</h1>
-    <div class="header__level">Your level 1/100</div>
-    <div class="header__score">Your score 0/100</div>            
+    <h1 class="header__title">Math Game</h1>
+    <div class="header__progress">
+        <div class="header__level">Your level 1/100</div>
+        <div class="header__score">Your score 0/100</div>  
+    </div>          
     `;
 
     #levelElement;
@@ -14,6 +16,7 @@ export class Header extends HTMLElement {
 
     connectedCallback() {
         this.innerHTML = this.#template;
+        this.classList.add('header');
 
         this.#levelElement = this.querySelector('.header__level');
         this.#scoreElement = this.querySelector('.header__score');
