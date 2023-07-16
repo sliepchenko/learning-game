@@ -103,7 +103,10 @@ export class Question extends HTMLElement {
         // dispatch event to notify parent component about result
         const event = new CustomEvent('questionChecked', {
             detail: {
-                isAnswerCorrect
+                correct: isAnswerCorrect,
+                question: `${this.#a} ${this.#operator} ${this.#b}`,
+                result: result,
+                answer: inputElement.value
             }
         });
         this.dispatchEvent(event);

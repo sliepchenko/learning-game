@@ -36,6 +36,9 @@ export class Game extends HTMLElement {
 
         this.#generateQuestion();
         this.#launchAntiCheatSystem();
+        // this.#launchProtectionSystem();
+
+        gtag('event', 'game_start');
     }
 
     #generateQuestion = (() => {
@@ -48,8 +51,20 @@ export class Game extends HTMLElement {
     }).bind(this);
 
     #onQuestionChecked = ((event) => {
-        if (event.detail.isAnswerCorrect) {
+        if (event.detail.correct) {
             this.#score += Game.MAX_SCORE / Game.MAX_LEVEL;
+
+            window.gSendEvent(
+                'user',
+                'answer',
+                'correct'
+            );
+        } else {
+            window.gSendEvent(
+                'user',
+                'answer',
+                'incorrect'
+            );
         }
 
         if (this.#level < Game.MAX_LEVEL) {
@@ -59,17 +74,40 @@ export class Game extends HTMLElement {
             this.header.setLevel(this.#level);
             this.header.setScore(this.#score);
         }
+
+        window.gSendEvent(
+            'user',
+            'level',
+            'change',
+            this.#level
+        );
+
+        window.gSendEvent(
+            'user',
+            'score',
+            'change',
+            this.#score
+        );
     }).bind(this);
 
     #launchAntiCheatSystem() {
-        window.document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                location.reload();
-            }
-        });
-
         window.addEventListener('blur', () => {
-            location.reload();
+            window.gSendEvent(
+                'system',
+                'anti_cheat',
+                'restart'
+            );
+
+            window.location.reload();
+        });
+    }
+
+    #launchProtectionSystem() {
+        window.addEventListener('beforeunload', (event) => {
+            if (window.game) {
+                event.preventDefault();
+                event.returnValue = 'Are you sure you want to leave?';
+            }
         });
     }
 }
