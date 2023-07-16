@@ -37,8 +37,6 @@ export class Game extends HTMLElement {
         this.#generateQuestion();
         this.#launchAntiCheatSystem();
         // this.#launchProtectionSystem();
-
-        gtag('event', 'game_start');
     }
 
     #generateQuestion = (() => {
@@ -53,18 +51,6 @@ export class Game extends HTMLElement {
     #onQuestionChecked = ((event) => {
         if (event.detail.correct) {
             this.#score += Game.MAX_SCORE / Game.MAX_LEVEL;
-
-            window.gSendEvent(
-                'user',
-                'answer',
-                'correct'
-            );
-        } else {
-            window.gSendEvent(
-                'user',
-                'answer',
-                'incorrect'
-            );
         }
 
         if (this.#level < Game.MAX_LEVEL) {
@@ -73,31 +59,18 @@ export class Game extends HTMLElement {
 
             this.header.setLevel(this.#level);
             this.header.setScore(this.#score);
+        } else {
+            window.gSendEvent(
+                'user',
+                'level',
+                'finished',
+                this.#score
+            );
         }
-
-        window.gSendEvent(
-            'user',
-            'level',
-            'change',
-            this.#level
-        );
-
-        window.gSendEvent(
-            'user',
-            'score',
-            'change',
-            this.#score
-        );
     }).bind(this);
 
     #launchAntiCheatSystem() {
         window.addEventListener('blur', () => {
-            window.gSendEvent(
-                'system',
-                'anti_cheat',
-                'restart'
-            );
-
             window.location.reload();
         });
     }

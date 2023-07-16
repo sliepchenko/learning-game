@@ -12,22 +12,19 @@
     <script>
         window.dataLayer = window.dataLayer || [];
         window.gtag = (...arguments) => dataLayer.push(arguments);
-        window.gSendEvent = (event, category, action, label) => {
-            console.log('gSendEvent', event, category, action, label);
-            dataLayer.push([
-                'event',
-                event,
-                {
-                    event_category: category,
-                    event_action: action,
-                    event_label: label,
-                    debug_mode: true
-                }
-            ]);
-        };
+        window.gSendEvent = (from, category, action, label) => dataLayer.push([
+            'event',
+            from,
+            {
+                event_category: category,
+                event_action: action,
+                event_label: label,
+                debug_mode: true
+            }
+        ]);
 
         gtag('js', new Date());
-        gtag('config', 'G-03PPGWB9VK', { 'debug_mode': true });
+        gtag('config', 'G-03PPGWB9VK');
     </script>
 
     <script src="script.js" type="module"></script>
