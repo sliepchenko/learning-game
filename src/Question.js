@@ -45,9 +45,8 @@ export class Question extends HTMLElement {
             <div class="question__operator">${this.#operator}</div>
             <div class="question__b">${this.#b}</div>
             <div class="question__equals">=</div>
-            <div class="question__answer">
-                <input class="question__input" type="number" />
-            </div>
+            <input class="question__input" type="number" />
+            <div class="question__answer">Answer <s><i class="answer__user"></i></s> is incorrect! Correct one is <b class="answer__result"></b>!</div>
             <button class="question__check">Check</button>
         `;
 
@@ -61,6 +60,9 @@ export class Question extends HTMLElement {
 
     check() {
         const inputElement = this.querySelector('.question__input');
+        const resultElement = this.querySelector('.question__answer');
+        const answerUserElement = this.querySelector('.answer__user');
+        const answerResultElement = this.querySelector('.answer__result');
         const checkElement = this.querySelector('.question__check');
 
         if (inputElement.value === '') {
@@ -68,24 +70,29 @@ export class Question extends HTMLElement {
         }
 
         // check answer according to rules
+        let result;
         let isAnswerCorrect;
         switch (this.#operator) {
             case Question.MULTIPLY:
-                isAnswerCorrect = this.#a * this.#b === Number(inputElement.value);
+                result = this.#a * this.#b;
+                isAnswerCorrect = result === Number(inputElement.value);
                 break;
             case Question.DIVIDE:
-                isAnswerCorrect = Math.floor(this.#a / this.#b) === Number(inputElement.value);
+                result = Math.floor(this.#a / this.#b);
+                isAnswerCorrect = result === Number(inputElement.value);
                 break;
             case Question.PLUS:
-                isAnswerCorrect = this.#a + this.#b === Number(inputElement.value);
-                break;
-            case Question.MINUS:
-                isAnswerCorrect = this.#a - this.#b === Number(inputElement.value);
+                result = this.#a + this.#b;
+                isAnswerCorrect = result === Number(inputElement.value);
                 break;
             default:
-                isAnswerCorrect = this.#a * this.#b;
+                result = this.#a - this.#b;
+                isAnswerCorrect = result === Number(inputElement.value);
                 break;
         }
+
+        answerUserElement.innerText = inputElement.value;
+        answerResultElement.innerText = result;
 
         this.classList.add(isAnswerCorrect ? 'question_correct' : 'question_incorrect');
 
