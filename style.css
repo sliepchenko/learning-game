@@ -66,6 +66,7 @@ body {
 .question__input {
     line-height: 1.5rem;
     font-size: 2rem;
+    width: 50%;
 }
 
 .question__check {
