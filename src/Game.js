@@ -66,6 +66,16 @@ export class Game extends HTMLElement {
             this.#score += Game.MAX_SCORE / Game.MAX_LEVEL;
         }
 
+        // send event to Google Analytics when user at 10, 20, 30, 40, 50, 60, 70, 80, 90 level
+        if (this.#level % 10 === 0) {
+            window.gSendEvent(
+                'user',
+                'level',
+                this.#level,
+                this.#score
+            );
+        }
+
         if (this.#level < Game.MAX_LEVEL) {
             this.#generateQuestion();
             this.#level++;
@@ -87,6 +97,13 @@ export class Game extends HTMLElement {
             this.#footer.setPenalty(++this.#antiCheatSystemCounter);
 
             if (this.#antiCheatSystemCounter > Game.ANTI_CHEAT_SYSTEM_MAX_COUNTER) {
+                window.gSendEvent(
+                    'system',
+                    'antiCheat',
+                    'reload',
+                    this.#score
+                );
+
                 window.location.reload();
             }
         });
