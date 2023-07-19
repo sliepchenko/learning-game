@@ -5,7 +5,7 @@ import { Question } from './Question.js';
 
 export class Game extends HTMLElement {
     // this value should be replaced by version.js script
-    static GAME_VERSION = '2023-07-19 11:03:09';
+    static GAME_VERSION = '2023-07-19 16:27:05';
 
     static ANTI_CHEAT_SYSTEM_MAX_COUNTER = 3;
 
