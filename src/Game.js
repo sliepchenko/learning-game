@@ -5,7 +5,7 @@ import { Question } from './Question.js';
 
 export class Game extends HTMLElement {
     // this value should be replaced by version.js script
-    static GAME_VERSION = '2023-07-19 10:42:13';
+    static GAME_VERSION = '2023-07-19 10:47:39';
 
     static ANTI_CHEAT_SYSTEM_MAX_COUNTER = 3;
 
@@ -84,9 +84,9 @@ export class Game extends HTMLElement {
 
     #launchAntiCheatSystem() {
         window.addEventListener('blur', () => {
-            this.#antiCheatSystemCounter++;
+            this.#footer.setPenalty(++this.#antiCheatSystemCounter);
 
-            if (this.#antiCheatSystemCounter < Game.ANTI_CHEAT_SYSTEM_MAX_COUNTER) {
+            if (this.#antiCheatSystemCounter > Game.ANTI_CHEAT_SYSTEM_MAX_COUNTER) {
                 window.location.reload();
             }
         });
