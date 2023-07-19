@@ -12,7 +12,6 @@ body {
     justify-content: center;
     align-items: stretch;
     gap: 1rem;
-    padding: 10px 20px;
 }
 
 /* Header */
@@ -89,4 +88,21 @@ body {
 
 .question_incorrect {
     background-color: #ffb5b5;
+}
+
+/* Footer */
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f5f5f5;
+    padding: 10px 20px;
+
+    font-size: 0.75rem;
+    color: #999;
 }

@@ -1,8 +1,14 @@
 import { Header } from './Header.js';
 import { Main } from './Main.js';
+import { Footer } from './Footer.js';
 import { Question } from './Question.js';
 
 export class Game extends HTMLElement {
+    // this value should be replaced by version.js script
+    static GAME_VERSION = '2023-07-19 10:42:13';
+
+    static ANTI_CHEAT_SYSTEM_MAX_COUNTER = 3;
+
     static MAX_LEVEL = 100;
     static MAX_SCORE = 100;
 
@@ -18,32 +24,39 @@ export class Game extends HTMLElement {
         [1000, 1000, Question.MINUS]
     ];
 
+    #antiCheatSystemCounter = 0;
+
     #level = 1;
     #score = 0;
 
-    header = new Header();
-    main = new Main();
+    #header = new Header();
+    #main = new Main();
+    #footer = new Footer();
 
     constructor() {
         super();
     }
 
     connectedCallback() {
-        this.append(this.header);
-        this.append(this.main);
+        this.append(this.#header);
+        this.append(this.#main);
+        this.append(this.#footer);
 
         this.classList.add('container');
 
         this.#generateQuestion();
         this.#launchAntiCheatSystem();
         // this.#launchProtectionSystem();
+
+        this.#footer.setPenalty(this.#antiCheatSystemCounter);
+        this.#footer.setVersion(Game.GAME_VERSION);
     }
 
     #generateQuestion = (() => {
         const randomIndex = Math.floor(Math.random() * Game.RANDOMIZE_OPTIONS.length);
         const randomOptions = Game.RANDOMIZE_OPTIONS[randomIndex];
 
-        const question = this.main.addQuestion(...randomOptions);
+        const question = this.#main.addQuestion(...randomOptions);
         question.addEventListener('questionChecked', this.#onQuestionChecked);
         question.focus();
     }).bind(this);
@@ -57,8 +70,8 @@ export class Game extends HTMLElement {
             this.#generateQuestion();
             this.#level++;
 
-            this.header.setLevel(this.#level);
-            this.header.setScore(this.#score);
+            this.#header.setLevel(this.#level);
+            this.#header.setScore(this.#score);
         } else {
             window.gSendEvent(
                 'user',
@@ -71,7 +84,11 @@ export class Game extends HTMLElement {
 
     #launchAntiCheatSystem() {
         window.addEventListener('blur', () => {
-            window.location.reload();
+            this.#antiCheatSystemCounter++;
+
+            if (this.#antiCheatSystemCounter < Game.ANTI_CHEAT_SYSTEM_MAX_COUNTER) {
+                window.location.reload();
+            }
         });
     }
 
