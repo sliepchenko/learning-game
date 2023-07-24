@@ -66,7 +66,8 @@ export class Game extends HTMLElement {
             this.#score += Game.MAX_SCORE / Game.MAX_LEVEL;
         }
 
-        // send event to Google Analytics when user at 10, 20, 30, 40, 50, 60, 70, 80, 90 level
+        // send event to Google Analytics when user at
+        // 10, 20, 30, 40, 50, 60, 70, 80, 90 level
         if (this.#level % 10 === 0) {
             window.gSendEvent(
                 'user',

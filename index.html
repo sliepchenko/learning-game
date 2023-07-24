@@ -14,23 +14,25 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-490J2JD5GB"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        window.gtag = (...arguments) => dataLayer.push(arguments);
-        window.gSendEvent = (from, category, action, label) => dataLayer.push([
-            'event',
-            from,
-            {
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        function gSendEvent(from, category, action, label) {
+            dataLayer.push(['event', from, {
                 event_category: category,
                 event_action: action,
                 event_label: label,
                 debug_mode: true
-            }
-        ]);
+            }]);
+        }
 
         gtag('js', new Date());
         gtag('config', 'G-490J2JD5GB');
     </script>
 </head>
 <body>
-    <script src="script.js" type="module"></script>
+<script src="script.js" type="module"></script>
 </body>
 </html>
