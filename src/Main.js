@@ -20,6 +20,10 @@ export class Main extends HTMLElement {
 
         return question;
     }
+
+    reset() {
+        this.innerHTML = '';
+    }
 }
 
 customElements.define('game-main', Main);

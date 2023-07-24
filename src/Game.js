@@ -24,7 +24,7 @@ export class Game extends HTMLElement {
         [1000, 1000, Question.MINUS]
     ];
 
-    #antiCheatSystemCounter = 0;
+    #penalties = 0;
 
     #level = 1;
     #score = 0;
@@ -44,12 +44,12 @@ export class Game extends HTMLElement {
 
         this.classList.add('container');
 
-        this.#generateQuestion();
-        this.#launchAntiCheatSystem();
-        // this.#launchProtectionSystem();
-
-        this.#footer.setPenalty(this.#antiCheatSystemCounter);
         this.#footer.setVersion(Game.GAME_VERSION);
+
+        this.#launchAntiCheatSystem();
+        this.#launchProtectionSystem();
+
+        this.#start();
     }
 
     #generateQuestion = (() => {
@@ -66,16 +66,7 @@ export class Game extends HTMLElement {
             this.#score += Game.MAX_SCORE / Game.MAX_LEVEL;
         }
 
-        // send event to Google Analytics when user at
-        // 10, 20, 30, 40, 50, 60, 70, 80, 90 level
-        if (this.#level % 10 === 0) {
-            window.gSendEvent(
-                'user',
-                'level',
-                this.#level,
-                this.#score
-            );
-        }
+        this.#sendEvent('game_level');
 
         if (this.#level < Game.MAX_LEVEL) {
             this.#generateQuestion();
@@ -83,29 +74,20 @@ export class Game extends HTMLElement {
 
             this.#header.setLevel(this.#level);
             this.#header.setScore(this.#score);
-        } else {
-            window.gSendEvent(
-                'user',
-                'level',
-                'finished',
-                this.#score
-            );
         }
     }).bind(this);
 
     #launchAntiCheatSystem() {
         window.addEventListener('blur', () => {
-            this.#footer.setPenalty(++this.#antiCheatSystemCounter);
+            this.#footer.setPenalty(++this.#penalties);
 
-            if (this.#antiCheatSystemCounter > Game.ANTI_CHEAT_SYSTEM_MAX_COUNTER) {
-                window.gSendEvent(
-                    'system',
-                    'antiCheat',
-                    'reload',
-                    this.#score
-                );
+            if (this.#penalties > Game.ANTI_CHEAT_SYSTEM_MAX_COUNTER) {
+                this.#sendEvent('game_reset', {
+                    reason: 'blur'
+                });
 
-                window.location.reload();
+                this.#reset();
+                this.#start();
             }
         });
     }
@@ -113,10 +95,39 @@ export class Game extends HTMLElement {
     #launchProtectionSystem() {
         window.addEventListener('beforeunload', (event) => {
             if (window.game) {
+                this.#sendEvent('game_reset', {
+                    reason: 'reload'
+                });
+
                 event.preventDefault();
                 event.returnValue = 'Are you sure you want to leave?';
             }
         });
+    }
+
+    #sendEvent(name, data) {
+        window.gSendEvent(name, {
+            level: this.#level,
+            score: this.#score,
+            penalty: this.#penalties,
+            ...data
+        })
+    }
+
+    #reset() {
+        this.#level = 1;
+        this.#score = 0;
+        this.#penalties = 0;
+    }
+
+    #start() {
+        this.#header.setLevel(this.#level);
+        this.#header.setScore(this.#score);
+
+        this.#main.reset();
+        this.#generateQuestion();
+
+        this.#footer.setPenalty(this.#penalties);
     }
 }
 
