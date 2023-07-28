@@ -82,10 +82,12 @@ export class FlagQuestion extends Question {
         // generate template
         this.#template = `
             <div class="question__country">${this.#answer.name}</div>
-            <button class="question__check question__flag">${this.#a.flag}</button>
-            <button class="question__check question__flag">${this.#b.flag}</button>
-            <button class="question__check question__flag">${this.#c.flag}</button>
-            <button class="question__check question__flag">${this.#d.flag}</button>
+            <div class="question__flags">
+                <button class="question__check question__flag">${this.#a.flag}</button>
+                <button class="question__check question__flag">${this.#b.flag}</button>
+                <button class="question__check question__flag">${this.#c.flag}</button>
+                <button class="question__check question__flag">${this.#d.flag}</button>
+            </div>
         `;
 
         this.innerHTML = this.#template;
