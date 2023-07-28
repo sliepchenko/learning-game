@@ -25,7 +25,7 @@ html {
     justify-content: space-between;
     align-items: center;
     background-color: #f5f5f5;
-    padding: 10px 20px;
+    padding: 5px 10px;
 }
 
 .header__title {
@@ -38,7 +38,7 @@ html {
 
 .header__timestamp {
     color: #999;
-    font-size: 0.5rem;
+    font-size: 0.75rem;
     text-align: center;
 }
 
@@ -50,7 +50,7 @@ html {
     align-items: stretch;
     gap: 0.5rem;
     background-color: #f5f5f5;
-    padding: 10px 20px;
+    padding: 5px 10px;
 }
 
 /* Game Choosing */
@@ -86,14 +86,28 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    padding: 10px;
-    line-height: 0;
+    gap: 5px;
+    padding: 5px;
+    line-height: 1rem;
     font-size: 1.5rem;
+}
+
+game-flag-question.question {
+    flex-direction: column;
 }
 
 .question .question__answer {
     display: none;
+}
+
+.question__answer {
+    position: absolute;
+    display: block;
+    right: auto;
+    left: auto;
+    bottom: 0;
+    font-size: 1rem;
+    background-color: #ffffff;
 }
 
 .question_incorrect .question__answer {
@@ -112,9 +126,13 @@ html {
     padding: 7px 15px;
 }
 
+.question__country {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+}
+
 .question__flags {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap: 5px;
@@ -138,14 +156,6 @@ html {
     border: 2px solid #b50000;
 }
 
-.question__answer {
-    position: absolute;
-    display: block;
-    bottom: auto;
-    left: auto;
-    font-size: 1rem;
-}
-
 .question_correct {
     background-color: #d9ffd1;
 }
@@ -165,7 +175,7 @@ html {
     justify-content: space-between;
     align-items: center;
     background-color: #f5f5f5;
-    padding: 10px 20px;
+    padding: 5px 10px;
 
     font-size: 0.75rem;
     color: #999;
@@ -179,7 +189,7 @@ html {
 
 @media screen and (min-width: 375px) and (max-width: 425px) {
     html {
-        font-size: 16px;
+        font-size: 15px;
     }
 }
 
