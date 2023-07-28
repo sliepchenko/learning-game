@@ -6,7 +6,7 @@ import { MathQuestion } from './MathQuestion.js';
 
 export class Game extends HTMLElement {
     // this value should be replaced by version.js script
-    static GAME_VERSION = '2023-07-28 14:33:08';
+    static VERSION = '2023-07-28 15:44:03';
 
     static ANTI_CHEAT_SYSTEM_MAX_COUNTER = 3;
 

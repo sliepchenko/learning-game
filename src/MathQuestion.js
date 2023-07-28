@@ -33,14 +33,13 @@ export class MathQuestion extends Question {
 
         // get attributes and convert it to comfortable format
         this.#options = {
-            a: { min: 0, max: randomOptions[0] },
-            b: { min: 0, max: randomOptions[1] },
+            a: { min: 1, max: randomOptions[0] },
+            b: { min: 1, max: randomOptions[1] },
             operator: randomOptions[2]
         };
     }
 
     connectedCallback() {
-
         // generate random numbers
         this.#a = Math.floor(Math.random() * (this.#options.a.max - this.#options.a.min)) + this.#options.a.min;
         this.#b = Math.floor(Math.random() * (this.#options.b.max - this.#options.b.min)) + this.#options.b.min;
