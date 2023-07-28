@@ -4,11 +4,13 @@ export class Header extends HTMLElement {
     <div class="header__progress">
         <div class="header__level">Your level 1/100</div>
         <div class="header__score">Your score 0/100</div>  
+        <div class="header__timestamp"></div>
     </div>          
     `;
 
     #levelElement;
     #scoreElement;
+    #timestampElement;
 
     constructor() {
         super();
@@ -20,6 +22,9 @@ export class Header extends HTMLElement {
 
         this.#levelElement = this.querySelector('.header__level');
         this.#scoreElement = this.querySelector('.header__score');
+        this.#timestampElement = this.querySelector('.header__timestamp');
+
+        this.#timestampElement.textContent = new Date().toLocaleString();
     }
 
     setLevel = ((level) => {

@@ -1,4 +1,4 @@
-import { Question } from './Question.js';
+import { MathQuestion } from './MathQuestion.js';
 
 export class Main extends HTMLElement {
     constructor() {
@@ -10,12 +10,7 @@ export class Main extends HTMLElement {
     }
 
     addQuestion(maxA, maxB, operator) {
-        const question = new Question();
-        question.setAttribute('a-min', 1);
-        question.setAttribute('a-max', maxA);
-        question.setAttribute('b-min', 1);
-        question.setAttribute('b-max', maxB);
-        question.setAttribute('operator', operator);
+        const question = new MathQuestion();
         this.prepend(question);
 
         return question;

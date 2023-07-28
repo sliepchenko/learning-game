@@ -1,28 +1,17 @@
 import { Header } from './Header.js';
 import { Main } from './Main.js';
 import { Footer } from './Footer.js';
-import { Question } from './Question.js';
+
+import { MathQuestion } from './MathQuestion.js';
 
 export class Game extends HTMLElement {
     // this value should be replaced by version.js script
-    static GAME_VERSION = '2023-07-24 09:51:11';
+    static GAME_VERSION = '2023-07-28 14:33:08';
 
     static ANTI_CHEAT_SYSTEM_MAX_COUNTER = 3;
 
     static MAX_LEVEL = 100;
     static MAX_SCORE = 100;
-
-    // this array describes how often each question type should be generated
-    static RANDOMIZE_OPTIONS = [
-        [10, 10, Question.MULTIPLY],
-        [10, 10, Question.MULTIPLY],
-        [10, 10, Question.MULTIPLY],
-        [1000, 10, Question.DIVIDE],
-        [1000, 10, Question.DIVIDE],
-        [1000, 10, Question.DIVIDE],
-        [1000, 1000, Question.PLUS],
-        [1000, 1000, Question.MINUS]
-    ];
 
     #penalties = 0;
 
@@ -53,10 +42,7 @@ export class Game extends HTMLElement {
     }
 
     #generateQuestion = (() => {
-        const randomIndex = Math.floor(Math.random() * Game.RANDOMIZE_OPTIONS.length);
-        const randomOptions = Game.RANDOMIZE_OPTIONS[randomIndex];
-
-        const question = this.#main.addQuestion(...randomOptions);
+        const question = this.#main.addQuestion();
         question.addEventListener('questionChecked', this.#onQuestionChecked);
         question.focus();
     }).bind(this);

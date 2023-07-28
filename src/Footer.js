@@ -22,11 +22,11 @@ export class Footer extends HTMLElement {
     }
 
     setPenalty = ((level) => {
-        this.#penaltyElement.textContent = `Penalty ${level}/${Game.ANTI_CHEAT_SYSTEM_MAX_COUNTER}`;
+        this.#penaltyElement.textContent = `Penalty: ${level}/${Game.ANTI_CHEAT_SYSTEM_MAX_COUNTER}`;
     }).bind(this);
 
     setVersion = ((date) => {
-        this.#versionElement.textContent = date;
+        this.#versionElement.textContent = `Version: ${date}`;
     }).bind(this);
 }
 
