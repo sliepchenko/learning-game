@@ -1,6 +1,6 @@
 export class Header extends HTMLElement {
     #template = `
-    <h1 class="header__title">Math Game</h1>
+    <h1 class="header__title">Learning Game</h1>
     <div class="header__progress">
         <div class="header__level">Your level 1/100</div>
         <div class="header__score">Your score 0/100</div>  
@@ -8,6 +8,7 @@ export class Header extends HTMLElement {
     </div>          
     `;
 
+    #nameElement;
     #levelElement;
     #scoreElement;
     #timestampElement;
@@ -20,11 +21,16 @@ export class Header extends HTMLElement {
         this.innerHTML = this.#template;
         this.classList.add('header');
 
+        this.#nameElement = this.querySelector('.header__title');
         this.#levelElement = this.querySelector('.header__level');
         this.#scoreElement = this.querySelector('.header__score');
         this.#timestampElement = this.querySelector('.header__timestamp');
 
         this.#timestampElement.textContent = new Date().toLocaleString();
+    }
+
+    setName = (name) => {
+        this.#nameElement.textContent = name;
     }
 
     setLevel = ((level) => {

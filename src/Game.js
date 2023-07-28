@@ -6,15 +6,19 @@ import { MathQuestion } from './MathQuestion.js';
 
 export class Game extends HTMLElement {
     // this value should be replaced by version.js script
-    static GAME_VERSION = '2023-07-28 15:44:03';
+    static VERSION = '2023-07-28 20:38:00';
 
-    static ANTI_CHEAT_SYSTEM_MAX_COUNTER = 3;
+    static TYPE_MATH = 'math';
+    static TYPE_FLAGS = 'flags';
 
     static MAX_LEVEL = 100;
     static MAX_SCORE = 100;
 
+    static ANTI_CHEAT_SYSTEM_MAX_COUNTER = 3;
+
     #penalties = 0;
 
+    #type;
     #level = 1;
     #score = 0;
 
@@ -33,19 +37,23 @@ export class Game extends HTMLElement {
 
         this.classList.add('container');
 
-        this.#footer.setVersion(Game.GAME_VERSION);
+        this.#main.addEventListener('questionChecked', this.#onQuestionChecked);
+        this.#main.addEventListener('gameTypeChanged', this.#onGameTypeChanged);
+        this.#footer.setVersion(Game.VERSION);
 
         this.#launchAntiCheatSystem();
         this.#launchProtectionSystem();
 
-        this.#start();
-    }
+        // if queryParams contains type, use it
+        // if this type is not in list of allowed, use default behaviour
+        const queryParams = new URLSearchParams(window.location.search);
+        this.#type = queryParams.get('type');
 
-    #generateQuestion = (() => {
-        const question = this.#main.addQuestion();
-        question.addEventListener('questionChecked', this.#onQuestionChecked);
-        question.focus();
-    }).bind(this);
+        if (this.#type && [Game.TYPE_MATH, Game.TYPE_FLAGS].includes(this.#type)) {
+            this.#reset();
+            this.#start();
+        }
+    }
 
     #onQuestionChecked = ((event) => {
         if (event.detail.correct) {
@@ -55,12 +63,19 @@ export class Game extends HTMLElement {
         this.#sendEvent('game_level');
 
         if (this.#level < Game.MAX_LEVEL) {
-            this.#generateQuestion();
+            this.#main.addQuestion(this.#type);
             this.#level++;
 
             this.#header.setLevel(this.#level);
             this.#header.setScore(this.#score);
         }
+    }).bind(this);
+
+    #onGameTypeChanged = ((event) => {
+        this.#type = event.detail.type;
+
+        this.#reset();
+        this.#start();
     }).bind(this);
 
     #launchAntiCheatSystem() {
@@ -111,7 +126,7 @@ export class Game extends HTMLElement {
         this.#header.setScore(this.#score);
 
         this.#main.reset();
-        this.#generateQuestion();
+        this.#main.addQuestion(this.#type);
 
         this.#footer.setPenalty(this.#penalties);
     }

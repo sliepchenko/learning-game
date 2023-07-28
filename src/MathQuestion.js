@@ -37,9 +37,7 @@ export class MathQuestion extends Question {
             b: { min: 1, max: randomOptions[1] },
             operator: randomOptions[2]
         };
-    }
 
-    connectedCallback() {
         // generate random numbers
         this.#a = Math.floor(Math.random() * (this.#options.a.max - this.#options.a.min)) + this.#options.a.min;
         this.#b = Math.floor(Math.random() * (this.#options.b.max - this.#options.b.min)) + this.#options.b.min;
@@ -60,7 +58,9 @@ export class MathQuestion extends Question {
             <div class="question__answer">Answer <s><i class="answer__user"></i></s> is incorrect! Correct one is <b class="answer__result"></b>!</div>
             <button class="question__check">Check</button>
         `;
+    }
 
+    connectedCallback() {
         this.className = 'question';
         this.innerHTML = this.#template;
 

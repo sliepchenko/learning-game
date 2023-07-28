@@ -53,6 +53,33 @@ body {
     padding: 10px 20px;
 }
 
+/* Game Choosing */
+.main__choose-game {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+}
+
+.choose-game__title {
+    font-size: 2rem;
+}
+
+.choose-game__buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.choose-game__button {
+    line-height: 1.5rem;
+    font-size: 2rem;
+    padding: 7px 20px;
+}
+
 /* Questions */
 .question {
     position: relative;
@@ -83,6 +110,24 @@ body {
     line-height: 1.5rem;
     font-size: 2rem;
     padding: 7px 20px;
+}
+
+.question__flag {
+    cursor: pointer;
+    font-size: 5rem;
+    padding: 1rem 0;
+}
+
+.question__flag_answer {
+    border: 2px solid #ffffff;
+}
+
+.question__flag_correct {
+    border: 2px solid #199700;
+}
+
+.question__flag_incorrect {
+    border: 2px solid #b50000;
 }
 
 .question__answer {
