@@ -2,11 +2,9 @@ import { Header } from './Header.js';
 import { Main } from './Main.js';
 import { Footer } from './Footer.js';
 
-import { MathQuestion } from './MathQuestion.js';
-
 export class Game extends HTMLElement {
     // this value should be replaced by version.js script
-    static VERSION = '2023-07-28 20:38:00';
+    static VERSION = '2023-07-28 20:50:03';
 
     static TYPE_MATH = 'math';
     static TYPE_FLAGS = 'flags';
