@@ -53,6 +53,19 @@ export class Game extends HTMLElement {
         }
     }
 
+    restore(level, score) {
+        this.#level = level;
+        this.#score = score;
+
+        this.#header.setLevel(this.#level);
+        this.#header.setScore(this.#score);
+
+        this.#sendEvent('game_restore', {
+            level: this.#level,
+            score: this.#score
+        });
+    }
+
     #onQuestionChecked = ((event) => {
         if (event.detail.correct) {
             this.#score += Game.MAX_SCORE / Game.MAX_LEVEL;
