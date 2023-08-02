@@ -4,7 +4,7 @@ import { Footer } from './Footer.js';
 
 export class Game extends HTMLElement {
     // this value should be replaced by version.js script
-    static VERSION = '2023-07-28 21:40:52';
+    static VERSION = '2023-08-02 08:43:02';
 
     static TYPE_MATH = 'math';
     static TYPE_FLAGS = 'flags';
