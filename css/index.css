@@ -1,0 +1,44 @@
+/*:root {*/
+/*    --colour-background: #f8f8fa;*/
+/*    --colour-hidden: #f0f0f2;*/
+/*    --colour-text: #6e7381;*/
+/*    --colour-disabled: #a0a0a7;*/
+/*    --colour-input: #d8d8df;*/
+/*    --colour-primary: #87c2ff;*/
+/*    --colour-success: #7ed09e;*/
+/*    --colour-warning: #f3b98c;*/
+/*    --colour-danger: #ff7b87;*/
+/*}*/
+
+@import url('colours.css');
+@import url('basic.css');
+@import url('menu-scene.css');
+@import url('questions-scene.css');
+@import url('questions-scene-header.css');
+@import url('questions-scene-main.css');
+@import url('questions-scene-footer.css');
+@import url('score-scene.css');
+
+/*@media screen and (max-width: 375px) {*/
+/*    html {*/
+/*        font-size: 12px;*/
+/*    }*/
+/*}*/
+
+/*@media screen and (min-width: 375px) and (max-width: 425px) {*/
+/*    html {*/
+/*        font-size: 15px;*/
+/*    }*/
+/*}*/
+
+/*@media screen and (min-width: 426px) and (max-width: 768px) {*/
+/*    html {*/
+/*        font-size: 18px;*/
+/*    }*/
+/*}*/
+
+/*@media screen and (min-width: 769px) {*/
+/*    html {*/
+/*        font-size: 21px;*/
+/*    }*/
+/*}*/

@@ -1,6 +1,6 @@
 {
-    "name": "MathGame",
-    "version": "0.1.0",
+    "name": "learning-game",
+    "version": "1.0.0",
     "scripts": {
         "version": "node version.js"
     }

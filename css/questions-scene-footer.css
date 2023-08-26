@@ -1,0 +1,20 @@
+.questions-scene-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 20px;
+    color: var(--colour-text-tertiary);
+    background-color: var(--colour-primary);
+
+    position: sticky;
+    bottom: 0;
+}
+
+.questions-scene-footer {
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.questions-scene-footer__counter {
+    display: flex;
+    gap: 5px;
+}

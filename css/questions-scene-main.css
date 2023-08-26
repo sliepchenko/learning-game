@@ -1,0 +1,129 @@
+.question {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 700;
+    padding: 10px 20px;
+}
+
+.question--incorrect {
+    background-color: var(--colour-danger-light);
+    color: var(--colour-disabled);
+}
+
+.question--incorrect .question__input {
+    border-color: var(--colour-danger);
+    text-decoration-line: line-through;
+}
+
+.question--incorrect .question__check--math {
+    background-color: var(--colour-disabled);
+}
+
+.question__correct {
+    padding: 10px 20px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    pointer-events: none;
+}
+
+.question--correct {
+    background-color: var(--colour-success-light);
+    color: var(--colour-disabled);
+}
+
+.question--correct .question__input {
+    border-color: var(--colour-success);
+}
+
+.question--correct .question__check--flag {
+    background-color: var(--colour-disabled);
+}
+
+.question__body {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-weight: 700;
+    width: 40%;
+    color: var(--colour-text-primary);
+}
+
+.question__answer {
+    position: relative;
+    width: 50%;
+}
+
+.question__input {
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid var(--colour-input);
+    background: var(--colour-input);
+    color: var(--colour-text-primary);
+    padding: 10px 20px;
+    width: 100%;
+}
+
+.question__check--math {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--colour-primary);
+}
+
+/* Flags */
+.question--flag {
+    display: flex;
+    flex-direction: column;
+}
+
+.question__country {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    color: var(--colour-text-primary);
+}
+
+.question__check--flag {
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--colour-primary);
+}
+
+.question__flag {
+    position: relative;
+    font-size: 3rem;
+    line-height: 2.5rem;
+    border: none;
+    background-color: transparent;
+}
+
+.question__flag--correct::after {
+    content: "✓";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    font-size: 2rem;
+    color: var(--colour-success);
+}
+
+.question__flag--incorrect::after {
+    content: "✗";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    font-size: 2rem;
+    color: var(--colour-danger);
+}

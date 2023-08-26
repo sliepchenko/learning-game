@@ -1,0 +1,22 @@
+/* Reset */
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: var(--colour-background);
+}
+
+html, body, game-container {
+    display: block;
+    height: 100%;
+}

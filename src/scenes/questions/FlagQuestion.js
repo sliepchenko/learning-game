@@ -91,7 +91,7 @@ export class FlagQuestion extends Question {
         `;
 
         this.innerHTML = this.#template;
-        this.className = 'question';
+        this.className = 'question question--flag';
 
         this.#buttons = Array.from(this.querySelectorAll('.question__check'));
 
@@ -106,7 +106,7 @@ export class FlagQuestion extends Question {
 
         const isAnswerCorrect = answer.name === this.#answer.name;
 
-        this.classList.add(isAnswerCorrect ? 'question_correct' : 'question_incorrect');
+        this.classList.add(isAnswerCorrect ? 'question--correct' : 'question--incorrect');
 
         // disable interactive elements to prevent multiple checks
         // highlight correct answer and user answer
@@ -114,11 +114,11 @@ export class FlagQuestion extends Question {
             button.disabled = true;
 
             if (button.innerText === answer.flag && isAnswerCorrect === false) {
-                button.classList.add('question__flag_incorrect');
+                button.classList.add('question__flag--incorrect');
             }
 
             if (button.innerText === this.#answer.flag) {
-                button.classList.add('question__flag_correct');
+                button.classList.add('question__flag--correct');
             }
         });
 

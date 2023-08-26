@@ -1,10 +1,14 @@
-import { Header } from './Header.js';
-import { Main } from './Main.js';
-import { Footer } from './Footer.js';
+import { MenuScene } from './scenes/menu/MenuScene.js';
+import { QuestionsScene } from './scenes/questions/QuestionsScene.js';
+import { ScoreScene } from './scenes/score/ScoreScene.js';
 
 export class Game extends HTMLElement {
     // this value should be replaced by version.js script
-    static VERSION = '2023-08-02 08:43:02';
+    static VERSION = '2023-08-26 21:40:23';
+
+    static MENU_SCENE = 'menuScene';
+    static QUESTIONS_SCENE = 'questionsScene';
+    static SCORE_SCENE = 'scoreScene';
 
     static TYPE_MATH = 'math';
     static TYPE_FLAGS = 'flags';
@@ -14,31 +18,35 @@ export class Game extends HTMLElement {
 
     static ANTI_CHEAT_SYSTEM_MAX_COUNTER = 3;
 
-    #penalties = 0;
+    #penalty = 0;
 
     #type;
     #level = 1;
     #score = 0;
+    #startDateTime;
+    #endDateTime;
 
-    #header = new Header();
-    #main = new Main();
-    #footer = new Footer();
+    #menuScene = new MenuScene();
+    #questionsScene = new QuestionsScene();
+    #scoreScene = new ScoreScene();
 
     constructor() {
         super();
     }
 
     connectedCallback() {
-        this.append(this.#header);
-        this.append(this.#main);
-        this.append(this.#footer);
-
+        // build UI
+        this.append(this.#menuScene);
+        this.append(this.#questionsScene);
+        this.append(this.#scoreScene);
         this.classList.add('container');
 
-        this.#main.addEventListener('questionChecked', this.#onQuestionChecked);
-        this.#main.addEventListener('gameTypeChanged', this.#onGameTypeChanged);
-        this.#footer.setVersion(Game.VERSION);
+        // listen for events
+        this.#menuScene.addEventListener('gameTypeChanged', this.#onGameTypeChanged);
+        this.#questionsScene.addEventListener('questionChecked', this.#onQuestionChecked);
+        this.#scoreScene.addEventListener('gameRestarted', this.#onGameRestarted);
 
+        // launch interactive systems
         this.#launchAntiCheatSystem();
         this.#launchProtectionSystem();
 
@@ -47,23 +55,16 @@ export class Game extends HTMLElement {
         const queryParams = new URLSearchParams(window.location.search);
         this.#type = queryParams.get('type');
 
+        // launch game with preselected type or show menu
+        this.#resetState();
+        this.#updateScenes();
+
         if (this.#type && [Game.TYPE_MATH, Game.TYPE_FLAGS].includes(this.#type)) {
-            this.#reset();
-            this.#start();
+            this.#switchScene(Game.QUESTIONS_SCENE);
+            this.#nextQuestion();
+        } else {
+            this.#switchScene(Game.MENU_SCENE);
         }
-    }
-
-    restore(level, score) {
-        this.#level = level;
-        this.#score = score;
-
-        this.#header.setLevel(this.#level);
-        this.#header.setScore(this.#score);
-
-        this.#sendEvent('game_restore', {
-            level: this.#level,
-            score: this.#score
-        });
     }
 
     #onQuestionChecked = ((event) => {
@@ -74,36 +75,42 @@ export class Game extends HTMLElement {
         this.#sendEvent('game_level');
 
         if (this.#level < Game.MAX_LEVEL) {
-            this.#main.addQuestion(this.#type);
             this.#level++;
-
-            this.#header.setLevel(this.#level);
-            this.#header.setScore(this.#score);
+            this.#nextQuestion();
+        } else {
+            this.#endDateTime = new Date().toLocaleString();
+            this.#switchScene(Game.SCORE_SCENE);
         }
+
+        this.#updateScenes();
     }).bind(this);
 
     #onGameTypeChanged = ((event) => {
         this.#type = event.detail.type;
 
-        this.#reset();
-        this.#start();
+        this.#switchScene(Game.QUESTIONS_SCENE);
+        this.#nextQuestion();
     }).bind(this);
 
+    // protect results from cheating
     #launchAntiCheatSystem() {
         window.addEventListener('blur', () => {
-            this.#footer.setPenalty(++this.#penalties);
+            this.#penalty++;
 
-            if (this.#penalties > Game.ANTI_CHEAT_SYSTEM_MAX_COUNTER) {
+            if (this.#penalty > Game.ANTI_CHEAT_SYSTEM_MAX_COUNTER) {
                 this.#sendEvent('game_reset', {
                     reason: 'blur'
                 });
 
-                this.#reset();
-                this.#start();
+                this.#endDateTime = new Date().toLocaleString();
+                this.#switchScene(Game.SCORE_SCENE);
             }
+
+            this.#updateScenes();
         });
     }
 
+    // protect results from reloading
     #launchProtectionSystem() {
         window.addEventListener('beforeunload', (event) => {
             if (window.game) {
@@ -117,30 +124,79 @@ export class Game extends HTMLElement {
         });
     }
 
+    // Google Analytics
     #sendEvent(name, data) {
-        window.gSendEvent(name, {
-            level: this.#level,
-            score: this.#score,
-            penalty: this.#penalties,
-            ...data
-        })
+        // window.gSendEvent(name, {
+        //     level: this.#level,
+        //     score: this.#score,
+        //     penalty: this.#penalties,
+        //     ...data
+        // })
     }
 
-    #reset() {
+    // reset game state
+    #resetState() {
         this.#level = 1;
         this.#score = 0;
-        this.#penalties = 0;
+        this.#penalty = 0;
+        this.#startDateTime = new Date().toLocaleString();
+        this.#endDateTime = null;
+
+        this.#questionsScene.reset();
     }
 
-    #start() {
-        this.#header.setLevel(this.#level);
-        this.#header.setScore(this.#score);
+    // update UI according to game state
+    #updateScenes() {
+        this.#questionsScene.update({
+            level: this.#level,
+            score: this.#score,
+            penalty: this.#penalty
+        });
 
-        this.#main.reset();
-        this.#main.addQuestion(this.#type);
-
-        this.#footer.setPenalty(this.#penalties);
+        this.#scoreScene.update({
+            level: this.#level,
+            score: this.#score,
+            startDateTime: this.#startDateTime,
+            endDateTime: this.#endDateTime
+        });
     }
+
+    // add a new question
+    #nextQuestion() {
+        this.#questionsScene.addQuestion(this.#type);
+    }
+
+    #switchScene(scene) {
+        switch (scene) {
+            case Game.MENU_SCENE:
+                this.#menuScene.show();
+                this.#questionsScene.hide();
+                this.#scoreScene.hide();
+                break;
+
+            case Game.QUESTIONS_SCENE:
+                this.#menuScene.hide();
+                this.#questionsScene.show();
+                this.#scoreScene.hide();
+                break;
+
+            case Game.SCORE_SCENE:
+                this.#menuScene.hide();
+                this.#questionsScene.hide();
+                this.#scoreScene.show();
+                break;
+
+            default:
+                throw new Error('Unknown scene');
+        }
+    }
+
+    #onGameRestarted = (() => {
+        this.#resetState();
+        this.#updateScenes();
+
+        this.#switchScene(Game.MENU_SCENE);
+    }).bind(this);
 }
 
 customElements.define('game-container', Game);

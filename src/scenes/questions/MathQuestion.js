@@ -50,19 +50,25 @@ export class MathQuestion extends Question {
 
         // generate template
         this.#template = `
-            <div class="question__a">${this.#a}</div>
-            <div class="question__operator">${this.#operator}</div>
-            <div class="question__b">${this.#b}</div>
-            <div class="question__equals">=</div>
-            <input class="question__input" type="number" />
-            <div class="question__answer">Answer <s><i class="answer__user"></i></s> is incorrect! Correct one is <b class="answer__result"></b>!</div>
-            <button class="question__check">Check</button>
+            <div class="question__body">
+                <div class="question__a">${this.#a}</div>
+                <div class="question__operator">${this.#operator}</div>
+                <div class="question__b">${this.#b}</div>
+                <div class="question__equals">=</div>
+            </div>
+            <div class="question__answer">
+                <input class="question__input" type="number" />
+                <div class="question__correct"></div>
+            </div>
+            <button class="question__check question__check--math">
+                <img src="./assets/check.svg" alt="Check" />
+            </button>
         `;
     }
 
     connectedCallback() {
-        this.className = 'question';
         this.innerHTML = this.#template;
+        this.className = 'question question--math';
 
         // add basic event listeners for interactive elements
         this.querySelector('.question__check').addEventListener('click', this.#onCheckClick);
@@ -71,9 +77,7 @@ export class MathQuestion extends Question {
 
     check() {
         const inputElement = this.querySelector('.question__input');
-        const resultElement = this.querySelector('.question__answer');
-        const answerUserElement = this.querySelector('.answer__user');
-        const answerResultElement = this.querySelector('.answer__result');
+        const correct = this.querySelector('.question__correct');
         const checkElement = this.querySelector('.question__check');
 
         if (inputElement.value === '') {
@@ -102,10 +106,11 @@ export class MathQuestion extends Question {
                 break;
         }
 
-        answerUserElement.innerText = inputElement.value;
-        answerResultElement.innerText = result;
+        if (isAnswerCorrect === false) {
+            correct.textContent = result;
+        }
 
-        this.classList.add(isAnswerCorrect ? 'question_correct' : 'question_incorrect');
+        this.classList.add(isAnswerCorrect ? 'question--correct' : 'question--incorrect');
 
         // disable interactive elements to prevent multiple checks
         inputElement.disabled = true;
