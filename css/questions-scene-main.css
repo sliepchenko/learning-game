@@ -50,6 +50,7 @@
     align-items: center;
     justify-content: center;
     gap: 5px;
+    font-size: 1.5rem;
     font-weight: 700;
     width: 40%;
     color: var(--colour-text-primary);
@@ -61,12 +62,12 @@
 }
 
 .question__input {
-    font-size: 1rem;
+    font-size: 1.5rem;
     border-radius: 5px;
     border: 1px solid var(--colour-input);
     background: var(--colour-input);
     color: var(--colour-text-primary);
-    padding: 10px 20px;
+    padding: 1px 10px;
     width: 100%;
 }
 
