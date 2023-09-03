@@ -25,6 +25,8 @@ export const locale = {
                 secondary: 'SCORE'
             },
             main: {
+                math: 'Mathematics',
+                flags: 'Flags',
                 level: 'Level',
                 score: 'Score'
             },

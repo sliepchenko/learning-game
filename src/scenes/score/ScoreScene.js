@@ -9,6 +9,7 @@ export class ScoreScene extends HTMLElement {
         <div class="score-scene__title--primary">${locale.scenes.score.title.primary}</div>
         <div class="score-scene__title--secondary">${locale.scenes.score.title.secondary}</div>
     </div>
+    <div class="score-scene__type"></div>
     <div class="score-scene__counters">
         <div class="score-scene__counter">
             <div class="score-scene__label">${locale.scenes.score.main.level}</div>
@@ -31,6 +32,7 @@ export class ScoreScene extends HTMLElement {
     <div class="score-scene__version">${Game.VERSION}</div>
     `;
 
+    #typeText;
     #levelText;
     #scoreText;
     #startDateTimeText;
@@ -48,6 +50,7 @@ export class ScoreScene extends HTMLElement {
         this.innerHTML = this.#template;
         this.classList.add('score-scene');
 
+        this.#typeText = this.querySelector('.score-scene__type');
         this.#levelText = this.querySelector('.score-scene__level');
         this.#scoreText = this.querySelector('.score-scene__score');
         this.#startDateTimeText = this.querySelector('.score-scene__start-date-time');
@@ -65,7 +68,8 @@ export class ScoreScene extends HTMLElement {
         this.style.display = 'flex';
     }
 
-    update({ level, score, startDateTime, endDateTime }) {
+    update({ type, level, score, startDateTime, endDateTime }) {
+        this.#typeText.textContent = locale.scenes.score.main[type];
         this.#levelText.textContent = `${level}/${Game.MAX_LEVEL}`;
         this.#scoreText.textContent = `${score}/${Game.MAX_SCORE}`;
         this.#startDateTimeText.textContent = startDateTime;

@@ -25,6 +25,8 @@ export const locale = {
                 secondary: 'WYNIK'
             },
             main: {
+                math: 'Matematyka',
+                flags: 'Flagi',
                 level: 'Poziom',
                 score: 'Wynik'
             },
@@ -33,7 +35,7 @@ export const locale = {
             }
         }
     }
-}
+};
 
 export const flags = [
     {name: 'Australia', region: 'Oceania', flag: '🇦🇺'},

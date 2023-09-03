@@ -47,8 +47,12 @@
     color: var(--colour-text-secondary);
 }
 
-.score-scene__counters {
+.score-scene__type {
     margin-top: 2rem;
+    align-self: center;
+}
+
+.score-scene__counters {
     display: flex;
     justify-content: space-evenly;
 }

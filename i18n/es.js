@@ -25,8 +25,10 @@ export const locale = {
                 secondary: 'PUNTAJE'
             },
             main: {
+                math: 'Matemáticas',
+                flags: 'Banderas',
                 level: 'Nivel',
-                score: 'Puntaje'
+                score: 'Puntaje',
             },
             buttons: {
                 again: 'Juega de nuevo'

@@ -25,6 +25,8 @@ export const locale = {
                 secondary: 'PUNTO'
             },
             main: {
+                math: 'Matematica',
+                flags: 'Bandiere',
                 level: 'Livello',
                 score: 'Punto'
             },

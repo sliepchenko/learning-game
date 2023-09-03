@@ -25,6 +25,8 @@ export const locale = {
                 secondary: 'RÉSULTAT'
             },
             main: {
+                math: 'Mathématiques',
+                flags: 'Drapeaux',
                 level: 'Niveau',
                 score: 'Compte'
             },

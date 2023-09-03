@@ -25,6 +25,8 @@ export const locale = {
                 secondary: 'РЕЗУЛЬТАТ'
             },
             main: {
+                math: 'Математика',
+                flags: 'Прапори',
                 level: 'Рівень',
                 score: 'Рахунок'
             },
