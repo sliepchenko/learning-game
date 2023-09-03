@@ -50,6 +50,7 @@
 .score-scene__type {
     margin-top: 2rem;
     align-self: center;
+    color: var(--colour-text-primary);
 }
 
 .score-scene__counters {

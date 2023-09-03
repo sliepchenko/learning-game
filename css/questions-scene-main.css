@@ -85,6 +85,10 @@
     flex-direction: column;
 }
 
+.question__region {
+    color: var(--colour-text-primary);
+}
+
 .question__country {
     font-size: 1.5rem;
     line-height: 1.5rem;
