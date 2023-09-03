@@ -1,52 +1,10 @@
 import { Question } from './Question.js';
 
+const { flags } = await import(`./../../../i18n/${navigator.language}.js`);
+
 export class FlagQuestion extends Question {
     // this array describes how often each question type should be generated
-    static RANDOMIZE_OPTIONS = [
-        {flag: '🇦🇱', name: 'Albania'},
-        {flag: '🇦🇩', name: 'Andorra'},
-        {flag: '🇦🇹', name: 'Austria'},
-        {flag: '🇧🇪', name: 'Belgium'},
-        {flag: '🇧🇦', name: 'Bosnia and Herzegovina'},
-        {flag: '🇧🇬', name: 'Bulgaria'},
-        {flag: '🇭🇷', name: 'Croatia'},
-        {flag: '🇨🇾', name: 'Cyprus'},
-        {flag: '🇨🇿', name: 'Czech Republic'},
-        {flag: '🇩🇰', name: 'Denmark'},
-        {flag: '🇪🇪', name: 'Estonia'},
-        {flag: '🇫🇮', name: 'Finland'},
-        {flag: '🇫🇷', name: 'France'},
-        {flag: '🇩🇪', name: 'Germany'},
-        {flag: '🇬🇷', name: 'Greece'},
-        {flag: '🇭🇺', name: 'Hungary'},
-        {flag: '🇮🇸', name: 'Iceland'},
-        {flag: '🇮🇪', name: 'Ireland'},
-        {flag: '🇮🇹', name: 'Italy'},
-        {flag: '🇱🇻', name: 'Latvia'},
-        {flag: '🇱🇮', name: 'Liechtenstein'},
-        {flag: '🇱🇹', name: 'Lithuania'},
-        {flag: '🇱🇺', name: 'Luxembourg'},
-        {flag: '🇲🇹', name: 'Malta'},
-        {flag: '🇲🇩', name: 'Moldova'},
-        {flag: '🇲🇨', name: 'Monaco'},
-        {flag: '🇲🇪', name: 'Montenegro'},
-        {flag: '🇳🇱', name: 'Netherlands'},
-        {flag: '🇲🇰', name: 'North Macedonia'},
-        {flag: '🇳🇴', name: 'Norway'},
-        {flag: '🇵🇱', name: 'Poland'},
-        {flag: '🇵🇹', name: 'Portugal'},
-        {flag: '🇷🇴', name: 'Romania'},
-        {flag: '🇸🇲', name: 'San Marino'},
-        {flag: '🇷🇸', name: 'Serbia'},
-        {flag: '🇸🇰', name: 'Slovakia'},
-        {flag: '🇸🇮', name: 'Slovenia'},
-        {flag: '🇪🇸', name: 'Spain'},
-        {flag: '🇸🇪', name: 'Sweden'},
-        {flag: '🇨🇭', name: 'Switzerland'},
-        {flag: '🇺🇦', name: 'Ukraine'},
-        {flag: '🇬🇧', name: 'United Kingdom'},
-        {flag: '🇻🇦', name: 'Vatican City'}
-    ];
+    static RANDOMIZE_OPTIONS = flags;
 
     #pool = [...FlagQuestion.RANDOMIZE_OPTIONS];
     #template = ``;
@@ -81,7 +39,10 @@ export class FlagQuestion extends Question {
     connectedCallback() {
         // generate template
         this.#template = `
-            <div class="question__country">${this.#answer.name}</div>
+            <div class="question__title">
+                <div class="question__region">${this.#answer.region}</div>
+                <div class="question__country">${this.#answer.name}</div>
+            </div>
             <div class="question__flags">
                 <button class="question__check question__flag">${this.#a.flag}</button>
                 <button class="question__check question__flag">${this.#b.flag}</button>
