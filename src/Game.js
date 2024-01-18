@@ -4,7 +4,7 @@ import { ScoreScene } from './scenes/score/ScoreScene.js';
 
 export class Game extends HTMLElement {
     // this value should be replaced by version.js script
-    static VERSION = '2023-09-03 18:40:59';
+    static VERSION = '2024-01-18 14:04:11';
 
     static MENU_SCENE = 'menuScene';
     static QUESTIONS_SCENE = 'questionsScene';

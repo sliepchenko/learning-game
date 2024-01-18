@@ -8,14 +8,14 @@ export class MathQuestion extends Question {
 
     // this array describes how often each question type should be generated
     static RANDOMIZE_OPTIONS = [
-        [10, 10, MathQuestion.MULTIPLY],
-        [10, 10, MathQuestion.MULTIPLY],
-        [10, 10, MathQuestion.MULTIPLY],
-        [1000, 10, MathQuestion.DIVIDE],
-        [1000, 10, MathQuestion.DIVIDE],
-        [1000, 10, MathQuestion.DIVIDE],
-        [1000, 1000, MathQuestion.PLUS],
-        [1000, 1000, MathQuestion.MINUS]
+    //     [10, 10, MathQuestion.MULTIPLY],
+    //     [10, 10, MathQuestion.MULTIPLY],
+    //     [10, 10, MathQuestion.MULTIPLY],
+    //     [1000, 10, MathQuestion.DIVIDE],
+    //     [1000, 10, MathQuestion.DIVIDE],
+    //     [1000, 10, MathQuestion.DIVIDE],
+        [[10000, 10000000], [1000, 1000000], MathQuestion.PLUS],
+        [[10000, 10000000], [1000, 1000000], MathQuestion.MINUS]
     ];
 
     #template = ``;
@@ -33,8 +33,8 @@ export class MathQuestion extends Question {
 
         // get attributes and convert it to comfortable format
         this.#options = {
-            a: { min: 1, max: randomOptions[0] },
-            b: { min: 1, max: randomOptions[1] },
+            a: { min: randomOptions[0][0], max: randomOptions[0][1] },
+            b: { min: randomOptions[1][0], max: randomOptions[1][1] },
             operator: randomOptions[2]
         };
 
